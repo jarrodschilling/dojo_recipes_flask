@@ -1,0 +1,13 @@
+.js-reg, .js-log {
+    margin-top: 50px; 
+    border: 1px black solid; 
+    padding: 20px; 
+}
+
+.js-form-label {
+    margin-bottom: 20px;
+}
+
+.button-js {
+    margin-top: 10px;
+}
