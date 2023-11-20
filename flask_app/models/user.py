@@ -23,12 +23,29 @@ class User:
         return connectToMySQL(cls.db).query_db(query, data)
     
     @classmethod
-    def check_email(cls, data):
+    def check_email(cls, email):
+        data = {
+            'email': email
+        }
         query = """SELECT * FROM users WHERE email = %(email)s;"""
-        return connectToMySQL(cls.db).query_db(query, data)
+        results = connectToMySQL(cls.db).query_db(query, data)
+        if len(results) > 0:
+            return False
     
+
+    @classmethod
+    def get_user(cls, data):
+        query = """
+            SELECT * FROM users WHERE email = %(email)s;
+            """
+        results = connectToMySQL(cls.db).query_db(query, data)
+        if len(results) < 1:
+            return False
+        return cls(results[0])
+    
+
     @staticmethod
-    def validate_reg(cls, data):
+    def validate_reg(data):
         is_valid = True
         if len(data['first_name']) < 2:
             flash("First name must be at least 2 letters", 'reg')
@@ -36,11 +53,17 @@ class User:
         if len(data['last_name']) < 2:
             flash("Last name must be at least 2 letters", 'reg')
             is_valid = False
-        if not EMAIL_REGEX.match(user['email']):
+        if not EMAIL_REGEX.match(data['email']):
             flash("Invalid email format", 'reg')
             is_valid = False
+        if len(data['password']) < 5:
+            flash("Password must be at least 5 characters long", 'reg')
+            is_valid = False    
         if data['password'] != data['confirmpassword']:
-            flash("Passwords must match")
+            flash("Passwords must match", 'reg')
+            is_valid = False
+        if User.check_email(data['email']):
+            flash("Email already in use, please choose another")
             is_valid = False
 
         return is_valid

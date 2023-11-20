@@ -13,52 +13,6 @@
             <a class="navbar-brand" href="/" style="font-size: 26px;">
                 Recipe Share
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                {% if session["user_id"] %}
-                <div class="navbar-nav me-2 mb-lg-0">
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            CORE
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/sector-summary">Sector Summary</a></li>
-                            <li><a class="dropdown-item" href="/sector-detail">Sector Detail</a></li>
-                            <li><a class="dropdown-item" href="/index-summary">Index Summary</a></li>
-                            <li><a class="dropdown-item" href="/index-detail">Index Detail</a></li>
-                            <!-- <li><a class="dropdown-item" href="/net-hilow">Net High/Low</a></li> -->
-                        </ul>
-                    </div>
-                    <!-- <a class="nav-link" href="/portfolio">Portfolio</a> -->
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Portfolio
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/portfolio">Current Portfolio</a></li>
-                            <li><a class="dropdown-item" href="/summary">Breadth Summary</a></li>
-                            <li><a class="dropdown-item" href="/detail">Breadth Detail</a></li>
-                        </ul>
-                    </div>
-                    <!-- <a class="nav-link" href="/summary">Summary</a>
-                    <a class="nav-link" href="/detail">Detail</a> -->
-                    <a class="nav-link" href="/create-portfolio">Create Portfolio</a>
-                    <a class="nav-link" href="/faq">FAQ</a>
-                    
-                </div>
-                <div class="navbar-nav ms-auto mt-2">
-                    <a class="nav-link" href="/contact">Contact</a>
-                    <a class="nav-link" href="/logout">Logout</a>
-                </div>
-                {% else %}
-                <div class="navbar-nav ms-auto mt-2">
-                    <a class="nav-link" href="/register">Register</a>
-                    <a class="nav-link" href="/login">Login</a>
-                </div>
-                {% endif %}
-            </div>
         </div>
     </nav>
 
@@ -66,9 +20,17 @@
         <div class="row align-items-start justify-content-space-between">
             <div class="col col-lg-1"></div>
         <div class="col col-lg-3 js-reg">
+            
             <form action="/register" method="post" class="row g-3 align-items-center">
                 <div class="text-center">
                     <label class="form-label js-form-label"><b>Register</b></label>
+                    {% with messages = get_flashed_messages(category_filter=['reg']) %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <p class="red"><strong>{{message}}</strong></p>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
                     <input autocomplete="off" type="text" class="form-control" placeholder="first name" name="first_name">
                 </div>
                 <div class="text-center">
@@ -92,6 +54,13 @@
         </div>
         <div class="col col-lg-2"></div>
         <div class="col col-lg-3 js-log">
+            {% with messages = get_flashed_messages(category_filter=['login']) %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p><strong>{{message}}</strong></p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
             <form action="/login" method="post" class="row g-3 align-items-center">
                 <div class="text-center">
                     <label for="email" class="form-label js-form-label"><b>Login to Account</b></label>
