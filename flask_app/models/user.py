@@ -22,18 +22,25 @@ class User:
                 VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s);"""
         return connectToMySQL(cls.db).query_db(query, data)
     
+    @classmethod
+    def check_email(cls, data):
+        query = """SELECT * FROM users WHERE email = %(email)s;"""
+        return connectToMySQL(cls.db).query_db(query, data)
+    
     @staticmethod
     def validate_reg(cls, data):
         is_valid = True
         if len(data['first_name']) < 2:
-            flash("First name must be at least 2 letters")
+            flash("First name must be at least 2 letters", 'reg')
             is_valid = False
         if len(data['last_name']) < 2:
-            flash("Last name must be at least 2 letters")
+            flash("Last name must be at least 2 letters", 'reg')
+            is_valid = False
+        if not EMAIL_REGEX.match(user['email']):
+            flash("Invalid email format", 'reg')
             is_valid = False
         if data['password'] != data['confirmpassword']:
             flash("Passwords must match")
             is_valid = False
-        if len(data['first_name']) < 2:
-            flash("First name must be at least 2 letters")
-            is_valid = False
+
+        return is_valid
