@@ -19,7 +19,7 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 {% if session["user_id"] %}
                 <div class="navbar-nav ms-auto mt-2">
-                    <a class="nav-link" href="/recipes/create">+ Create</a>
+                    <a class="nav-link" href="/recipes">Back to Recipes</a>
                     <a class="nav-link" href="/logout">Logout</a>
                 </div>
                 {% else %}
@@ -33,32 +33,26 @@
     </nav>
 
     <h1>Welcome, {{session['first_name']}}</h1>
+    <h2>{{recipe.name}}</h2>
     <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Under</th>
-                <th scope="col">Posted By</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
         <tbody>
-            {% for recipe in recipes %}
-            <tr>
-                <th scope="row">{{recipe.name}}</th>
-                <td>{{recipe.under}}</td>
-                <td>{{recipe.user_cook.first_name}}</td>
-                <td>
-                    <a href="{{ url_for('get_one_recipe', recipe_id=recipe.id) }}">view recipe</a>
-                    {% if session['user_id'] == recipe.user_cook.id %}
-                        <a href="{{ url_for('update_recipe_page', recipe_id=recipe.id) }}">edit</a>
-                        <a href="{{ url_for('delete_recipe', recipe_id=recipe.id) }}">delete</a>
-                    {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
+        <tr>
+            <th scope="row">Description:</th>
+            <td>{{recipe.description}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Under 30 Minutes?</th>
+            <td>{{recipe.under}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Instructions:</th>
+            <td>{{recipe.instructions}}</td>
+        </tr>
+        <tr>
+            <th scope="row">Date Made:</th>
+            <td>{{recipe.date_made}}</td>
+        </tr>
         </tbody>
     </table>
-
 </body>
 </html>

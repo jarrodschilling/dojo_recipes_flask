@@ -15,28 +15,57 @@ class Recipe:
         self.user_id = data['user_id']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
+        self.user_cook = None
     
     @classmethod
     def save(cls, data):
-        query = """INSERT INTO recipes (name, description, instructions, date_made, under) 
-                VALUES (%(name)s, %(description)s, %(instructions)s, %(date_made)s, %(under)s,);"""
+        query = """INSERT INTO recipes (name, description, instructions, date_made, under, user_id) 
+                VALUES (%(name)s, %(description)s, %(instructions)s, %(date_made)s, %(under)s, %(user_id)s);"""
         return connectToMySQL(cls.db).query_db(query, data)
     
     @classmethod
+    def get_one(cls, data):
+        query = """SELECT * FROM recipes WHERE id = %(id)s;"""
+        results = connectToMySQL(cls.db).query_db(query, data)
+        return cls(results[0])
+
+    @classmethod
     def get_all(cls, data):
-        query = """SELECT * FROM recipes WHERE user_id = %(user_id)s;"""
+        query = """SELECT * FROM recipes
+                LEFT JOIN users ON users.id = recipes.user_id;"""
         results = connectToMySQL(cls.db).query_db(query, data)
         print(results)
         recipes = []
         for row in results:
-            recipes.append(cls(row))
+            one_recipe = cls(row)
+            recipe_cook_info = {
+                'id': row['users.id'],
+                'first_name': row['first_name'],
+                'last_name': row['last_name'],
+                'email': row['email'],
+                'password': row['password'],
+                'created_at': row['users.created_at'],
+                'updated_at': row['users.updated_at']
+            }
+
+            cook = user.User(recipe_cook_info)
+            one_recipe.user_cook = cook
+            recipes.append(one_recipe)
+
         return recipes
     
     @classmethod
     def delete_one(cls, data):
         query = """DELETE FROM recipes WHERE id = %(id)s;"""
-        return connectToMySQL(cls.db).query(query, data)
+        return connectToMySQL(cls.db).query_db(query, data)
     
+
+    @classmethod
+    def update_recipe(cls, data):
+        query = """UPDATE recipes SET name = %(name)s, description = %(description)s, 
+                instructions = %(instructions)s, date_made = %(date_made)s, 
+                under = %(under)s WHERE id = %(id)s;"""
+        return connectToMySQL(cls.db).query_db(query, data)
 
     @staticmethod
     def validate_recipe(data):

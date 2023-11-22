@@ -30,7 +30,7 @@ class User:
         query = """SELECT * FROM users WHERE email = %(email)s;"""
         results = connectToMySQL(cls.db).query_db(query, data)
         if len(results) > 0:
-            return False
+            return True
     
 
     @classmethod
@@ -63,7 +63,7 @@ class User:
             flash("Passwords must match", 'reg')
             is_valid = False
         if User.check_email(data['email']):
-            flash("Email already in use, please choose another")
+            flash("Email already in use, please choose another", 'reg')
             is_valid = False
 
         return is_valid

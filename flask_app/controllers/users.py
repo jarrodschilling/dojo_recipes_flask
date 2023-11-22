@@ -43,3 +43,9 @@ def login():
     session['first_name'] = user_in_db.first_name
 
     return redirect('/recipes')
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect('/')
