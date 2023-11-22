@@ -5,6 +5,8 @@ from flask_app.models.recipe import Recipe
 
 @app.route('/recipes')
 def recipes_home():
+    if 'user_id' not in session:
+        return redirect('/')
     data = {
         'user_id': session['user_id']
     }
@@ -14,11 +16,15 @@ def recipes_home():
 
 @app.route('/recipes/create')
 def create_recipe():
+    if 'user_id' not in session:
+        return redirect('/')
     return render_template('new_recipe.html')
 
 
 @app.route('/recipes/new', methods=['POST'])
 def new_recipe():
+    if 'user_id' not in session:
+        return redirect('/')
     if not Recipe.validate_recipe(request.form):
         return redirect('/recipes/create')
     data = {
@@ -35,6 +41,8 @@ def new_recipe():
 
 @app.route('/recipes/<int:recipe_id>')
 def get_one_recipe(recipe_id):
+    if 'user_id' not in session:
+        return redirect('/')
     data = {
         'id': recipe_id
     }
@@ -43,6 +51,8 @@ def get_one_recipe(recipe_id):
 
 @app.route("/recipes/delete/<int:recipe_id>")
 def delete_recipe(recipe_id):
+    if 'user_id' not in session:
+        return redirect('/')
     data = {
         'id': recipe_id
     }
@@ -51,6 +61,8 @@ def delete_recipe(recipe_id):
 
 @app.route("/recipes/edit/<int:recipe_id>")
 def update_recipe_page(recipe_id):
+    if 'user_id' not in session:
+        return redirect('/')
     data = {
         'id': recipe_id
     }
@@ -60,6 +72,8 @@ def update_recipe_page(recipe_id):
 
 @app.route("/recipes/update", methods=['POST'])
 def update_recipe():
+    if 'user_id' not in session:
+        return redirect('/')
     check_id = request.form['id']
     if 'under' not in request.form:
         flash("Can this be made in under 30 mins?")
