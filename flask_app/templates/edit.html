@@ -10,7 +10,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/" style="font-size: 26px;">
+            <a class="navbar-brand js-nav-left" href="/">
                 Recipe Share
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,63 +19,58 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 {% if session["user_id"] %}
                 <div class="navbar-nav ms-auto mt-2">
-                    <a class="nav-link" href="/recipes">Recipes</a>
-                    <a class="nav-link" href="/logout">Logout</a>
-                </div>
-                {% else %}
-                <div class="navbar-nav ms-auto mt-2">
-                    <a class="nav-link" href="/register">Register</a>
-                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link js-nav-right" href="/recipes">Recipes</a>
+                    <a class="nav-link js-nav-right" href="/logout">Logout</a>
                 </div>
                 {% endif %}
             </div>
         </div>
     </nav>
-
-    <h1>Edit Recipe!</h1>
+    <h1 class="js-h1">Edit Recipe!</h1>
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
-                <p class="red"><strong>{{message}}</strong></p>
+                <p class="red js-h1"><strong>{{message}}</strong></p>
             {% endfor %}
         {% endif %}
     {% endwith %}
-    <form class="row g-3" action="/recipes/update" method="post">
-        <div class="col-md-4">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{recipe.name}}">
-            <input type="hidden" class="form-control" id="id" name="id" value="{{recipe.id}}">
+    <form class="row align-items-start gx-5 justify-content-start" action="/recipes/update" method="post">
+        <div class="col-4 js-edit">
+            <div class="row">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{recipe.name}}">
+                <input type="hidden" class="form-control" id="id" name="id" value="{{recipe.id}}">
+            </div>
+            <div class="row js-form-space">
+                <label for="description" class="form-label">Description</label>
+                <textarea type="text" rows="4" class="form-control" id="description" name="description">{{recipe.description}}</textarea>
+            </div>
+            <div class="row js-form-space">
+                <label for="instructions" class="form-label">Instructions</label>
+                <textarea type="text" rows="4" class="form-control" id="instructions" name="instructions">{{recipe.instructions}}</textarea>
+            </div>
         </div>
-        <div class="col-md-5"></div>
-        <div class="col-md-4">
-            <label for="description" class="form-label">Description</label>
-            <textarea type="text" rows="4" class="form-control" id="description" name="description">{{recipe.description}}</textarea>
-        </div>
+
         <div class="col-2">
-            <label for="date_made" class="form-label">Date Created/Made</label>
-            <input type="date" class="form-control" id="date_made" name="date_made" value="{{recipe.date_made}}">
-        </div>
-        <div class="col-md-5"></div>
-        <div class="col-md-4">
-            <label for="instructions" class="form-label">Instructions</label>
-            <textarea type="text" rows="4" class="form-control" id="instructions" name="instructions">{{recipe.instructions}}</textarea>
-        </div>
-        <div class="col-md-4">
-            <div class="form-check">
-                <label for="date_made" class="form-label">Under 30 minutes?</label>
+            <div class="row js-date">
+                <label for="date_made" class="form-label">Date Created/Made</label>
+                <input type="date" class="form-control" id="date_made" name="date_made" value="{{recipe.date_made}}">
             </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="under" id="yes" value="yes">
-                <label class="form-check-label" for="yes">yes</label>
+            <div class="row js-date">
+                <div class="form-check">
+                    <label for="date_made" class="form-label">Under 30 minutes?</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="under" id="yes" value="yes">
+                    <label class="form-check-label" for="yes">yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="under" id="no" value="no">
+                    <label class="form-check-label" for="no">no</label>
+                </div>
             </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="under" id="no" value="no">
-                <label class="form-check-label" for="no">no</label>
-            </div>
+            <button type="submit" class="btn btn-primary js-create-btn">Update</button>
         </div>
-        <div class="col-12">
-            <button type="submit" class="btn btn-primary">Create</button>
-        </div>
-        </form>
+    </form>
 </body>
 </html>

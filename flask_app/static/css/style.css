@@ -39,3 +39,19 @@
     margin-top: 20px;
     margin-left: 20px;
 }
+
+.js-edit {
+    margin: 20px 40px;
+}
+
+.js-date {
+    margin: 60px 0;
+}
+
+.js-form-space {
+    margin-top: 10px;
+}
+
+.js-create-btn {
+    width:150px;
+}
