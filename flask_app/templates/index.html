@@ -51,16 +51,16 @@
                 </form>
             </div>
             <div class="col-3 js-log">
-                {% with messages = get_flashed_messages(category_filter=['login']) %}
-                    {% if messages %}
-                        {% for message in messages %}
-                            <p><strong>{{message}}</strong></p>
-                        {% endfor %}
-                    {% endif %}
-                {% endwith %}
                 <form action="/login" method="post" class="row g-3 align-items-center">
                     <div class="text-center">
                         <label for="email" class="form-label js-form-label"><b>Login to Account</b></label>
+                        {% with messages = get_flashed_messages(category_filter=['login']) %}
+                            {% if messages %}
+                                {% for message in messages %}
+                                    <p class="red"><strong>{{message}}</strong></p>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
                         <input autocomplete="off" type="email" id="email" class="form-control" placeholder="email" name="email">
                     </div>
                     <div class="text-center">

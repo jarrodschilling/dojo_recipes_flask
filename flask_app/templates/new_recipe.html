@@ -10,7 +10,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/" style="font-size: 26px;">
+            <a class="navbar-brand js-nav-left" href="/">
                 Recipe Share
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,20 +19,15 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 {% if session["user_id"] %}
                 <div class="navbar-nav ms-auto mt-2">
-                    <a class="nav-link" href="/recipes">Recipes</a>
-                    <a class="nav-link" href="/logout">Logout</a>
-                </div>
-                {% else %}
-                <div class="navbar-nav ms-auto mt-2">
-                    <a class="nav-link" href="/register">Register</a>
-                    <a class="nav-link" href="/login">Login</a>
+                    <a class="nav-link js-nav-right" href="/recipes">Recipes</a>
+                    <a class="nav-link js-nav-right" href="/logout">Logout</a>
                 </div>
                 {% endif %}
             </div>
         </div>
     </nav>
 
-    <h1>Add a New Recipe!</h1>
+    <h1 class="js-h1">Add a New Recipe!</h1>
     <!-- <h3 class="red">Description must not be blank</h3> -->
     {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -42,12 +37,12 @@
         {% endif %}
     {% endwith %}
     <form class="row g-3" action="/recipes/new" method="post">
-        <div class="col-md-4">
+        <div class="col-4">
             <label for="name" class="form-label">Name</label>
             <input type="text" class="form-control" id="name" name="name">
         </div>
-        <div class="col-md-5"></div>
-        <div class="col-md-4">
+        <div class="col-5"></div>
+        <div class="col-4">
             <label for="description" class="form-label">Description</label>
             <textarea type="text" rows="4" class="form-control" id="description" name="description"></textarea>
         </div>
@@ -55,12 +50,12 @@
             <label for="date_made" class="form-label">Date Created/Made</label>
             <input type="date" class="form-control" id="date_made" name="date_made">
         </div>
-        <div class="col-md-5"></div>
-        <div class="col-md-4">
+        <div class="col-5"></div>
+        <div class="col-4">
             <label for="instructions" class="form-label">Instructions</label>
             <textarea type="text" rows="4" class="form-control" id="instructions" name="instructions"></textarea>
         </div>
-        <div class="col-md-4">
+        <div class="col-4">
             <div class="form-check">
                 <label for="date_made" class="form-label">Under 30 minustes?</label>
             </div>
