@@ -4,6 +4,10 @@
     padding: 20px; 
 }
 
+.js-reg {
+    margin-right: 100px;
+}
+
 .js-form-label {
     margin-bottom: 20px;
 }
