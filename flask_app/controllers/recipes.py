@@ -27,6 +27,7 @@ def new_recipe():
         return redirect('/')
     if not Recipe.validate_recipe(request.form):
         return redirect('/recipes/create')
+
     data = {
         'name': request.form['name'],
         'description': request.form['description'],
@@ -72,6 +73,7 @@ def update_recipe_page(recipe_id):
 
 @app.route("/recipes/update", methods=['POST'])
 def update_recipe():
+    print(request.form)
     if 'user_id' not in session:
         return redirect('/')
     check_id = request.form['id']

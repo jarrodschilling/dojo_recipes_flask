@@ -60,14 +60,25 @@
                 <div class="form-check">
                     <label for="date_made" class="form-label">Under 30 minutes?</label>
                 </div>
+                {% if recipe.under == 'yes' %}
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="under" id="yes" value="yes">
+                    <input class="form-check-input" type="radio" name="under" id="yes" value="yes" checked>
                     <label class="form-check-label" for="yes">yes</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="under" id="no" value="no">
                     <label class="form-check-label" for="no">no</label>
                 </div>
+                {% else %}
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="under" id="yes" value="yes">
+                    <label class="form-check-label" for="yes">yes</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="under" id="no" value="no" checked>
+                    <label class="form-check-label" for="no">no</label>
+                </div>
+                {% endif %}
             </div>
             <button type="submit" class="btn btn-primary js-create-btn">Update</button>
         </div>

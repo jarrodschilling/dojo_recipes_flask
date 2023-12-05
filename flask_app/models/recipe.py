@@ -82,5 +82,8 @@ class Recipe:
         if len(data['date_made']) < 1:
             flash("Must enter a valid date")
             is_valid = False
+        if 'under' not in data:
+            flash('under needed')
+            is_valid = False
 
         return is_valid
